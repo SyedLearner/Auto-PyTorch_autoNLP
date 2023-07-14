@@ -7,10 +7,10 @@ class BertEncoder(BaseEncoder):
     """
     Perform encoding on text features using a pretrained BERT model
     """
-    def __init__(self, output_dir: str, max_length: int = 128):
+    def __init__(self, pari: str, max_length: int = 128):
         super().__init__()
-        self.tokenizer = BertTokenizer.from_pretrained(output_dir)
-        self.model = BertModel.from_pretrained(output_dir)
+        self.tokenizer = BertTokenizer.from_pretrained(pari)
+        self.model = BertModel.from_pretrained(pari)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.model.eval()
