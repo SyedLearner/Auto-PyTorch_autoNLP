@@ -1,6 +1,6 @@
 import torch
 from transformers import BertTokenizer, BertModel
-from typing import Dict, Any
+from typing import Dict, Any, Optional, Union
 from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.base_encoder import BaseEncoder
 
 class BertEncoder(BaseEncoder):
