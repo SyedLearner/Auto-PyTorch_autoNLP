@@ -45,3 +45,13 @@ class BertEncoder(BaseEncoder):
         The fit function simply checks the requirements and returns the instance of self.
         """
         self
+    @staticmethod
+    def get_properties(
+        dataset_properties: Optional[Dict[str, BaseDatasetPropertiesType]] = None
+    ) -> Dict[str, Union[str, bool]]:
+        return {
+            'shortname': 'contextual_encoder',
+            'name': 'contextual encoder',
+            'handles_sparse': True
+        }
+   
