@@ -2,7 +2,6 @@
 from typing import Any, Dict, List
 from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.base_tabular_preprocessing import autoPyTorchTabularPreprocessingComponent
 from autoPyTorch.utils.common import FitRequirement
-from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.contextual_encoder import ContextualEncoder
 
 # Define a class named BaseEncoder that extends the autoPyTorchTabularPreprocessingComponent class
 class BaseEncoder(autoPyTorchTabularPreprocessingComponent):
