@@ -13,13 +13,14 @@ from autoPyTorch.pipeline.components.base_component import (
     find_components,
 )
 from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.base_encoder import BaseEncoder
+from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.contextual_encoder import ContextualEncoder
 
 
 encoding_directory = os.path.split(__file__)[0]
 _encoders = find_components(__package__,
                             encoding_directory,
-                            BaseEncoder)
-_addons = ThirdPartyComponents(BaseEncoder)
+                            BaseEncoder,ContextualEncoder)
+_addons = ThirdPartyComponents(BaseEncoder,ContextualEncoder)
 
 
 def add_encoder(encoder: BaseEncoder) -> None:
@@ -66,7 +67,7 @@ class EncoderChoice(autoPyTorchChoice):
             raise ValueError("no encoders found, please add a encoder")
 
         if default is None:
-            defaults = ['OneHotEncoder', 'NoEncoder']
+            defaults = ['OneHotEncoder','NoEncoder','ContextualEncoder']
             for default_ in defaults:
                 if default_ in available_preprocessors:
                     if include is not None and default_ not in include:

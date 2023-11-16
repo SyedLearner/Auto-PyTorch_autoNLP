@@ -271,7 +271,7 @@ class TabularClassificationPipeline(ClassifierMixin, BasePipeline):
                 del possible_default_embeddings[possible_default_embeddings.index('LearnedEntityEmbedding')]
 
                 for encoder in encoders:
-                    if encoder == 'OneHotEncoder':
+                    if encoder == 'OneHotEncoder' or encoder == 'ContextualEncoder':
                         continue
                     while True:
                         try:
