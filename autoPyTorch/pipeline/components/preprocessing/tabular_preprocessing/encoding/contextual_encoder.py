@@ -1,4 +1,5 @@
 
+import numpy as np
 import torch
 from transformers import BertTokenizer, BertModel
 from typing import Dict, Any, Optional, Union
@@ -8,8 +9,9 @@ class ContextualEncoder(BaseEncoder):
     """
     Perform encoding on text features using a pretrained BERT model
     """
-    def __init__(self):
+    def __init__(self,random_state: Optional[Union[np.random.RandomState, int]] = None):
         super().__init__()
+        self.random_state = random_state
         self.max_length = 256
         self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.model = BertModel.from_pretrained('bert-base-uncased')
