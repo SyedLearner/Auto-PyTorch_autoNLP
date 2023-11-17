@@ -1,7 +1,7 @@
 
 import numpy as np
 import torch
-from transformers import BertTokenizer, BertModel
+from transformers import BertTokenizer, BertForSequenceClassification
 from typing import Dict, Any, Optional, Union
 from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.base_encoder import BaseEncoder
 from autoPyTorch.datasets.base_dataset import BaseDatasetPropertiesType
@@ -13,10 +13,9 @@ class ContextualEncoder(BaseEncoder):
         super().__init__()
         self.random_state = random_state
         self.max_length = 256
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        self.model = BertModel.from_pretrained('bert-base-uncased')
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.model.to(self.device)
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',num_labels=2).to(self.device)
         self.model.eval()
 
     def get_text_representation(self, text: str):
