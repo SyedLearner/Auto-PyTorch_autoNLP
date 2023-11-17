@@ -13,13 +13,13 @@ from autoPyTorch.pipeline.components.base_component import (
     find_components,
 )
 from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.base_encoder import BaseEncoder
-from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.contextual_encoder import ContextualEncoder
+#from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encoding.contextual_encoder import ContextualEncoder
 
 encoding_directory = os.path.split(__file__)[0]
 _encoders = find_components(__package__,
                             encoding_directory,
-                            BaseEncoder,ContextualEncoder)
-_addons = ThirdPartyComponents(BaseEncoder,ContextualEncoder)
+                            BaseEncoder)
+_addons = ThirdPartyComponents(BaseEncoder)
 
 
 def add_encoder(encoder: BaseEncoder) -> None:

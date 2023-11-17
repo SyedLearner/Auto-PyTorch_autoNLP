@@ -65,7 +65,7 @@ class ContextualEncoder(BaseEncoder):
         dataset_properties: Optional[Dict[str, BaseDatasetPropertiesType]] = None
     ) -> Dict[str, Union[str, bool]]:
         return {
-            'shortname': 'contextual_encoder',
-            'name': 'contextual encoder',
+            'shortname': 'ContextualEncoder',
+            'name': 'Contextual Encoder',
             'handles_sparse': True
         }
