@@ -8,11 +8,11 @@ class ContextualEncoder(BaseEncoder):
     """
     Perform encoding on text features using a pretrained BERT model
     """
-    def __init__(self, bert_model_path: str):
+    def __init__(self):
         super().__init__()
         self.max_length = 256
-        self.tokenizer = BertTokenizer.from_pretrained(bert_model_path)
-        self.model = BertModel.from_pretrained(bert_model_path)
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.model = BertModel.from_pretrained('bert-base-uncased')
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model.to(self.device)
         self.model.eval()
