@@ -18,13 +18,13 @@ from autoPyTorch.pipeline.components.preprocessing.tabular_preprocessing.encodin
 encoding_directory = os.path.split(__file__)[0]
 _encoders = find_components(__package__,
                             encoding_directory,
-                            BaseEncoder,ContextualEncoder)
-_addons = ThirdPartyComponents(BaseEncoder,ContextualEncoder)
+                            BaseEncoder)
+_addons = ThirdPartyComponents(BaseEncoder)
 
+_encoders.update({'ContextualEncoder': ContextualEncoder})
 
 def add_encoder(encoder: BaseEncoder) -> None:
     _addons.add_component(encoder)
-
 
 class EncoderChoice(autoPyTorchChoice):
     """
