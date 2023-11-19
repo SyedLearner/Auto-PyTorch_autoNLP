@@ -10,14 +10,16 @@ class ContextualEncoder(BaseEncoder):
     """
     Perform encoding on text features using a pretrained BERT model
     """
-    def __init__(self,random_state: Optional[Union[np.random.RandomState, int]] = None):
+    def __init__(self,bert_model_path : str, random_state: Optional[Union[np.random.RandomState, int]] = None):
         super().__init__()
         self.random_state = random_state
         self.max_length = 256
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if ContextualEncoder.model is None:
-            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-            ContextualEncoder.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',num_labels=2).to(self.device)
+            # self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+            # ContextualEncoder.model = BertForSequenceClassification.from_pretrained('bert-base-uncased',num_labels=2).to(self.device)
+            self.tokenizer = BertTokenizer.from_pretrained(bert_model_path)
+            ContextualEncoder.model = BertForSequenceClassification.from_pretrained(bert_model_path,num_labels=2).to(self.device)
         self.model = ContextualEncoder.model
         self.model.eval()
 
@@ -42,17 +44,8 @@ class ContextualEncoder(BaseEncoder):
         return text_representations
 
     def transform(self, X: Dict[str, Any]) -> Dict[str, Any]:
-       
-        # categorical_columns = X['dataset_properties']['categorical_columns']
-        # encoded_data = []
 
-        # for col in categorical_columns:
-        #     texts = X[col].astype(str).tolist()
-        #     encoded_texts = self.get_text_representation(texts)
-        #     encoded_data.append(encoded_texts)
-
-        # X.update({'encoder': {'categorical': torch.cat(encoded_data, dim=1)}})
-        texts = X['text_column'].astype(str).tolist()
+        texts = X['sentence'].astype(str).tolist()
         encoded_texts = self.get_text_representation(texts)
         
         X.update({'encoder': {'categorical': encoded_texts}})

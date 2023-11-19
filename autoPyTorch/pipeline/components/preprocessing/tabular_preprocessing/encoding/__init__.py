@@ -19,9 +19,9 @@ encoding_directory = os.path.split(__file__)[0]
 _encoders = find_components(__package__,
                             encoding_directory,
                             BaseEncoder)
+_encoders.update({'ContextualEncoder': ContextualEncoder})
 _addons = ThirdPartyComponents(BaseEncoder)
 
-_encoders.update({'ContextualEncoder': ContextualEncoder})
 
 def add_encoder(encoder: BaseEncoder) -> None:
     _addons.add_component(encoder)
@@ -86,6 +86,11 @@ class EncoderChoice(autoPyTorchChoice):
                                  "choices in {} got {}".format(self.__class__.__name__,
                                                                available_preprocessors,
                                                                choice_hyperparameter.value_range))
+            
+            if 'ContextualEncoder' in choice_hyperparameter.value_range:
+                bert_model_path = CSH.CategoricalHyperparameter('encoder:ContextualEncoder:bert_model_path', [])
+                cs.add_hyperparameter(bert_model_path)
+
             if len(choice_hyperparameter) == 0:
                 assert len(choice_hyperparameter.value_range) == 1
                 assert 'NoEncoder' in choice_hyperparameter.value_range, \
