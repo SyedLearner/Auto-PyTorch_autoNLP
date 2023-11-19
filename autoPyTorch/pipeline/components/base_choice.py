@@ -116,24 +116,26 @@ class autoPyTorchChoice(object):
 
         available_comp = self.get_components()
 
-        if include is not None:
+        
+        components_dict = OrderedDict()
+        if include is not None and isinstance(include,dict):
             for incl_key, incl_value in include.items():
                 if incl_key not in available_comp:
                     raise ValueError("Trying to include unknown component: %s" % incl_key)
 
+                components_dict[incl_key] = []
                 for incl_item in incl_value:
                     if isinstance(incl_item, tuple) and len(incl_item) == 2:
                         comp_name, comp_params = incl_item
                         if comp_name not in available_comp[incl_key]:
                             raise ValueError("Trying to include unknown component %s for %s" % (comp_name, incl_key))
-                        components_dict[comp_name] = available_comp[incl_key][comp_name](**comp_params)
+                        components_dict[incl_key].append((comp_name, comp_params))
                     else:
                         if incl_item not in available_comp[incl_key]:
                             raise ValueError("Trying to include unknown component %s for %s" % (incl_item, incl_key))
-                        components_dict[incl_item] = available_comp[incl_key][incl_item]()
+                        components_dict[incl_key].append(incl_item)
 
 
-        components_dict = OrderedDict()
         for name in available_comp:
             if include is not None and name not in include:
                 continue
